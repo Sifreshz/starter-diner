@@ -12,7 +12,7 @@ class Crud extends Application {
 		} 
 		
 		$this->data['pagebody'] ='mtce';
-		$this->data['items'] = $this->Menu->all();
+		$this->data['items'] = $this->menu->all();
 		$this->render();
 	}
         
