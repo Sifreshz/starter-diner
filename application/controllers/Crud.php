@@ -80,7 +80,7 @@ class Crud extends Application {
 		$record = $this->session->userdata('record');
 		// only delete if editing an existing record
 		if (! empty($record)) {
-			$this->Menu->delete($key);
+			$this->menu->delete($key);
 		}
 		$this->index();
 	}
@@ -114,17 +114,17 @@ class Crud extends Application {
 
 		// validate
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules($this->Menu->rules());
+		$this->form_validation->set_rules($this->menu->rules());
 
 		if ($this->form_validation->run() != TRUE)
 			$this->error_messages = $this->form_validation->error_array();
 
 		// check menu code for additions
 		if ($key == null)
-			if ($this->Menu->exists($record->id))
+			if ($this->menu->exists($record->id))
 				$this->error_messages[] = 'Duplicate key adding new menu item';
 
-		if (! $this->Categories->exists($record->category))
+		if (! $this->categories->exists($record->category))
 			$this->error_messages[] = 'Invalid category code: ' . $record->category;
 		
 		// save or not
@@ -134,9 +134,9 @@ class Crud extends Application {
 		}
 		// update our table, finally!
 		if ($key == null)
-			$this->Menu->add($record);
+			$this->menu->add($record);
 		else
-			$this->Menu->update($record);
+			$this->menu->update($record);
 		// and redisplay the list
 
 
@@ -160,7 +160,7 @@ class Crud extends Application {
 	// handle uploaded image, and use its name as the picture name
 	function replace_picture() {
 
-		$this->load->library('upload', $this->Menu->rule_picture());
+		$this->load->library('upload', $this->menu->rule_picture());
 		if (!$this->upload->do_upload('replacement')) {
 			$this->error_messages[] = $this->upload->display_errors();
 			return NULL;
@@ -170,7 +170,7 @@ class Crud extends Application {
 
 	function add() {
 		$key = NULL;
-		$record = $this->Menu->create();
+		$record = $this->menu->create();
 		$this->session->set_userdata('key', $key);
 		$this->session->set_userdata('record', $record);
 		$this->edit();
